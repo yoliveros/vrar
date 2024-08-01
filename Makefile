@@ -5,12 +5,6 @@ dev: $(main)
 	@echo 'Dev Build'
 	$(CC) $(main) -o dev/vrar -g -Wall -Werror -Wextra -pedantic -std=c17
 
-exec:
-	@echo 'Running...'
-	@dev/./vrar
-
-run: dev exec
-
 clean: 
 	@rm -rf dev
 	@rm -rf dist
