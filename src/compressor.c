@@ -121,7 +121,7 @@ int is_leaf(MinHeapNode *root) {
 }
 
 // Create min heap of capacity size
-MinHeap *create_and_build_min_heap(char data[], int freq[], int size) {
+MinHeap *create_and_build_min_heap(char *data, int *freq, int size) {
   MinHeap *min_heap = create_min_heap(size);
 
   for (int i = 0; i < size; i++)
@@ -134,7 +134,7 @@ MinHeap *create_and_build_min_heap(char data[], int freq[], int size) {
 }
 
 // The main functions that builds the Huffman Tree
-MinHeapNode *build_huffman_tree(char data[], int freq[], int size) {
+MinHeapNode *build_huffman_tree(char *data, int *freq, int size) {
   MinHeapNode *left, *right, *top;
 
   MinHeap *min_heap = create_and_build_min_heap(data, freq, size);
@@ -173,7 +173,7 @@ void print_codes(MinHeapNode *root, int arr[], int top) {
 }
 
 // Main function for the encoding
-void HuffmanCodes(char data[], int freq[], int size) {
+void HuffmanCodes(char *data, int *freq, int size) {
   MinHeapNode *root = build_huffman_tree(data, freq, size);
 
   int arr[MAX_TREE_HT], top = 0;
