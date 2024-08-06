@@ -2,4 +2,4 @@
 
 make
 
-dev/./vrar $1
+dev/vrar $1

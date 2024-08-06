@@ -1,4 +1,4 @@
-
+#pragma once
 #include <stdio.h>
 #define LOWER 1024
 #define UPPER 65536
