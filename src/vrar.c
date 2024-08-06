@@ -2,35 +2,40 @@
 #include "files.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct {
-  int *f_arr;
-  size_t total;
-} Freq;
-
-Freq *GetFreq(FileContent *file) {
-  Freq *freq = malloc(sizeof(Freq));
+int *GetFreq(char *file) {
   size_t increase = LOWER;
   size_t allocated = increase;
-  freq->f_arr = calloc(allocated, sizeof(int));
+  int *f_arr = calloc(allocated, sizeof(int));
+  size_t total_file = strlen(file);
+  // printf("%s", file);
+  // printf("%lo\n", total_file);
+  size_t total;
 
-  for (freq->total = 0; freq->total < file->total; freq->total++) {
-    freq->f_arr[file->content[freq->total] - 'a']++;
+  for (total = 0; total < total_file; total++) {
+    f_arr[file[total] - 'a']++;
+    // printf("%c, %d\n", file[total], f_arr[file[total]]);
 
-    if (freq->total >= allocated) {
+    if (total >= allocated) {
       if (increase >= UPPER)
         increase = UPPER;
 
       allocated += increase;
 
-      freq->f_arr = realloc(freq->f_arr, allocated);
+      f_arr = realloc(f_arr, allocated);
 
       increase *= 2;
     }
   }
 
-  freq->f_arr = realloc(freq->f_arr, freq->total);
-  return freq;
+  // for (int i = 0; f_arr[i] != '\0'; i++) {
+  //   char c = 'a' + i;
+  //   printf("%c, %d\n", c, f_arr[i]);
+  // }
+
+  f_arr = realloc(f_arr, total);
+  return f_arr;
 }
 
 int main(int argsc, char **argsv) {
@@ -39,12 +44,21 @@ int main(int argsc, char **argsv) {
     return 1;
   }
 
-  FileContent *file_content = ReadFile(argsv[1]);
+  char *file_content = ReadFile(argsv[1]);
+  // char *c = file_content;
 
-  Freq *freq = GetFreq(file_content);
+  // while (c != NULL) {
+  //   printf("%c", *c++);
+  // }
 
-  // for (size_t i = 0; i < freq->total; i++)
-  //   printf("%c, %d\n", file_content->content[i], freq->f_arr[i]);
+  int *freq = GetFreq(file_content);
+  printf("%p\n", (void *)freq);
+
+  // for (int i = 0; freq[i] != '\0'; i++) {
+  // char c = 'a' + i;
+  // printf("");
+  // printf("%c, %d\n", c, freq[i]);
+  // }
 
   // int size = file_content->total / sizeof(file_content->content[0]);
 
