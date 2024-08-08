@@ -11,7 +11,7 @@ int main(int argsc, char **argsv) {
 
   char *file_content = ReadFile(argsv[1]);
 
-  int *freq = GetFreq(file_content);
+  Freq *freq = GetFreq(file_content);
   printf("%p\n", (void *)freq);
 
   // int size = file_content->total / sizeof(file_content->content[0]);

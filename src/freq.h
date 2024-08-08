@@ -1,3 +1,8 @@
 #pragma once
 
-int *GetFreq(char *file);
+typedef struct {
+  int *f_arr;
+  char *words;
+} Freq;
+
+Freq *GetFreq(char *file);
