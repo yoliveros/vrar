@@ -1,7 +1,9 @@
 // Huffman Encoding
 #include "compressor.h"
+#include "files.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_TREE_HT 100
 
@@ -107,11 +109,13 @@ void build_min_heap(MinHeap *min_heap) {
 }
 
 // Function to print an array of size n
-void print_arr(int arr[], int n) {
-  for (int i = 0; i < n; i++)
-    printf("%d", arr[i]);
-
-  printf("\n");
+void print_arr(int arr[], int n, char *code) {
+  for (int i = 0; i < n; i++) {
+    char c[255];
+    sprintf(c, "%d", arr[i]);
+    // printf("%c", (char *)arr[i]);
+    strcat(code, c);
+  }
 }
 
 // Function to check if this node is leaf
@@ -155,28 +159,32 @@ MinHeapNode *build_huffman_tree(char *data, int *freq, int size) {
 }
 
 // Prints huffman codes from the root of the tree
-void print_codes(MinHeapNode *root, int arr[], int top) {
+void print_codes(MinHeapNode *root, int arr[], int top, char *code) {
   if (root->left) {
     arr[top] = 0;
-    print_codes(root->left, arr, top + 1);
+    print_codes(root->left, arr, top + 1, code);
   }
 
   if (root->right) {
     arr[top] = 1;
-    print_codes(root->right, arr, top + 1);
+    print_codes(root->right, arr, top + 1, code);
   }
 
   if (is_leaf(root)) {
-    printf("%c", root->data);
-    print_arr(arr, top);
+    // printf("%c", root->data);
+    print_arr(arr, top, code);
   }
 }
 
 // Main function for the encoding
-void HuffmanCodes(char *data, int *freq, int size) {
+char *HuffmanCodes(char *data, int *freq, int size) {
   MinHeapNode *root = build_huffman_tree(data, freq, size);
 
   int arr[MAX_TREE_HT], top = 0;
 
-  print_codes(root, arr, top);
+  char *code = malloc(1024);
+
+  print_codes(root, arr, top, code);
+
+  return code;
 }

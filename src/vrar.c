@@ -1,7 +1,8 @@
-// #include "compressor.h"
+#include "compressor.h"
 #include "files.h"
 #include "freq.h"
 #include <stdio.h>
+#include <string.h>
 
 int main(int argsc, char **argsv) {
   if (argsc < 2) {
@@ -11,12 +12,15 @@ int main(int argsc, char **argsv) {
 
   char *file_content = ReadFile(argsv[1]);
 
-  Freq *freq = GetFreq(file_content);
+  int *freq = GetFreq(file_content);
+
   printf("%p\n", (void *)freq);
 
-  // int size = file_content->total / sizeof(file_content->content[0]);
+  int size = strlen(file_content) / sizeof(file_content[0]);
 
-  // HuffmanCodes(file_content->content, freq->f_arr, size);
+  char *cmp = HuffmanCodes(file_content, freq, size);
+
+  WriteFile(cmp);
 
   return 0;
 }
